@@ -1,0 +1,22 @@
+<alert type="success">
+  <strong>Tabs!</strong> you can enable/disable tab switching with the button here.
+</alert>
+
+<label for="switcher">Disable tab switching: <input type="checkbox" [(ngModel)]="disableSwitching"></label>
+<p>Tab switching is <strong>{{ disableSwitching ? 'disabled' : 'enabled ' }}</strong>.</p>
+<hr>
+<tabset (click)="confirmTabSwitch($event)" #tabset>
+  <tab tab1 heading="First tab" id="first" #first [disabled]="disableSwitching">
+    Tab 1 content
+  </tab>
+
+  <tab tab2 heading="Second tab" id="second" select="!disableSwitching && second.active = true" #second
+    [disabled]="disableSwitching">
+    <button (click)="toggleGrid()">{{showGrid ? 'Hide Grid' : 'Show Grid'}}</button>
+    <div *ngIf="showGrid">
+      <ag-grid-angular style="width: 500px; height: 200px;" class="ag-theme-alpine" [rowData]="rowData"
+        [columnDefs]="columnDefs" (firstDataRendered)="onFirstDataRendered($event)">
+      </ag-grid-angular>
+    </div>
+  </tab>
+</tabset>
