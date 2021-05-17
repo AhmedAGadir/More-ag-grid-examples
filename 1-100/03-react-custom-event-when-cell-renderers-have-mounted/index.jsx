@@ -14,7 +14,7 @@ const MyCellRenderer = params => {
     setTimeout(() => {
       console.log('dispatching cellRendererReady event');
       params.api.dispatchEvent({ type: 'cellRendererReady' });
-    }, 500);
+    }, 1000);
   }, []);
   return (
     <span>**{params.value}**</span>
@@ -27,14 +27,13 @@ const GridExample = () => {
   const [rowData, setRowData] = useState(null);
 
   const [renderedCellCount, setRenderedCellCount] = useState(0);
-
-  const cellRendererReadyHandler = useDebounce(renderedCellCount, 1000);
+  const debouncedRenderedCellCount = useDebounce(renderedCellCount, 500);
 
   useEffect(() => {
     if (renderedCellCount > 0) {
       console.log('cell renderers have finished rendering');
     }
-  }, [cellRendererReadyHandler])
+  }, [debouncedRenderedCellCount])
 
   const onGridReady = (params) => {
     setGridApi(params.api);
